@@ -5,8 +5,9 @@
   (paper "A4")
 
   (title_block
-    (title "BattleBot PCB")
+    (title "BattleBot Electrical Diagram")
     (date "2023-11-18")
+    (rev "2")
   )
 
   (lib_symbols
@@ -734,6 +735,102 @@
         )
       )
     )
+    (symbol "Motor_DC_1" (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "M3" (at 5.08 -3.81 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Value" "Motor_DC" (at 5.08 -1.27 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Footprint" "" (at 0 -2.286 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 0 -2.286 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "DC Motor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "DC Motor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_fp_filters" "PinHeader*P2.54mm* TerminalBlock*" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "Motor_DC_1_0_0"
+        (polyline
+          (pts
+            (xy 1.27 0.635)
+            (xy 1.27 -3.175)
+            (xy 0 -0.635)
+            (xy -1.27 -3.175)
+            (xy -1.27 0.635)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "Motor_DC_1_0_1"
+        (circle (center 0 -1.524) (radius 3.2512)
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 -7.62)
+            (xy 0 -7.112)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 -4.7752)
+            (xy 0 -5.1816)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 1.7272)
+            (xy 0 2.0828)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy 0 2.032)
+            (xy 0 2.54)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "Motor_DC_1_1_1"
+        (polyline
+          (pts
+            (xy -3.81 -1.27)
+            (xy -3.175 -1.27)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (pin passive line (at 0 5.08 270) (length 2.54)
+          (name "A" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 0 -7.62 90) (length 2.54)
+          (name "B" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at -6.35 -1.27 0) (length 2.54)
+          (name "C" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "power:GND" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "#PWR" (at 0 -6.35 0)
         (effects (font (size 1.27 1.27)) hide)
@@ -792,6 +889,10 @@
     (uuid 8831e679-1bc7-4867-92bc-497753252782)
   )
 
+  (wire (pts (xy 55.88 142.24) (xy 73.66 142.24))
+    (stroke (width 0) (type default))
+    (uuid 01e8000e-f0e7-49fc-9efa-a5e57b3afd73)
+  )
   (wire (pts (xy 143.51 50.8) (xy 143.51 57.15))
     (stroke (width 0) (type default))
     (uuid 0285bc6c-89a5-4bd0-bd16-036ec8d00eb5)
@@ -988,6 +1089,10 @@
     (stroke (width 0) (type default))
     (uuid a15b87aa-f2ed-41d3-a0a8-8229145b9aa7)
   )
+  (wire (pts (xy 55.88 140.97) (xy 55.88 142.24))
+    (stroke (width 0) (type default))
+    (uuid a976f882-c73b-43cd-9c26-c05b6be44fd7)
+  )
   (wire (pts (xy 138.43 143.51) (xy 138.43 132.08))
     (stroke (width 0) (type default))
     (uuid abf1fb16-2202-4f31-9651-f0201cc87e4c)
@@ -1020,6 +1125,14 @@
     (stroke (width 0) (type default))
     (uuid b6e3e43a-e8e3-446b-8528-abc60732f283)
   )
+  (wire (pts (xy 55.88 127) (xy 73.66 127))
+    (stroke (width 0) (type default))
+    (uuid b848be2c-10cf-4b81-b1ab-c43f50498eeb)
+  )
+  (wire (pts (xy 62.23 134.62) (xy 73.66 134.62))
+    (stroke (width 0) (type default))
+    (uuid bdaa3262-37cb-4d2a-b063-3a150e117616)
+  )
   (wire (pts (xy 232.41 85.09) (xy 238.76 85.09))
     (stroke (width 0) (type default))
     (uuid c0414486-3af2-4a09-bc02-fe8c79051ca5)
@@ -1048,6 +1161,10 @@
     (stroke (width 0) (type default))
     (uuid d9160939-3747-4413-98a8-4ce6475bc86d)
   )
+  (wire (pts (xy 55.88 128.27) (xy 55.88 127))
+    (stroke (width 0) (type default))
+    (uuid e9774f9a-41e4-4bb5-a74e-84373bb8c915)
+  )
   (wire (pts (xy 232.41 115.57) (xy 232.41 105.41))
     (stroke (width 0) (type default))
     (uuid ea22e69a-6451-4f7b-85db-d9f4f704c2eb)
@@ -1063,6 +1180,22 @@
   (wire (pts (xy 120.65 67.31) (xy 143.51 67.31))
     (stroke (width 0) (type default))
     (uuid fe26f0dd-2820-4ffc-b328-bcc9ed51c3b2)
+  )
+
+  (rectangle (start 187.96 137.16) (end 215.9 151.13)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 18dc259a-18e6-4798-8e6a-74290adaeaac)
+  )
+  (rectangle (start 128.27 41.91) (end 156.21 52.07)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 3c9ace70-311d-48ea-89d5-5ab38d9c10a9)
+  )
+  (rectangle (start 73.66 120.65) (end 111.76 149.86)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 6b4acfca-dec4-463c-9853-1e3908f8d379)
   )
 
   (text "MOTOR ESC POWER" (at 82.55 130.81 0)
@@ -1084,6 +1217,10 @@
   (text "\nRight Side Motor" (at 247.65 92.71 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 951dc5a9-2421-4f87-8982-fbeb9d434472)
+  )
+  (text "ESC" (at 90.17 120.65 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid a52bc061-e167-4c25-9373-cd883a02e393)
   )
   (text "Left Side Motor" (at 247.65 110.49 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -1112,7 +1249,7 @@
     (pin "2" (uuid c9f16b7a-cb99-481f-8de4-5402189a1f28))
     (pin "1" (uuid d0c6c4d2-6b7e-42e0-8eaf-f394124dd1d2))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J3") (unit 1)
         )
@@ -1138,7 +1275,7 @@
     (pin "1" (uuid 88a556fb-c23f-49b9-a6d2-5d2834e3bc2e))
     (pin "2" (uuid 5f0eb5bb-bba9-4f79-86a3-f099452c03b5))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "BT1") (unit 1)
         )
@@ -1163,7 +1300,7 @@
     )
     (pin "1" (uuid 6877bc0f-ca86-4e04-8e1a-3969e22d0a7e))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "#PWR01") (unit 1)
         )
@@ -1190,7 +1327,7 @@
     (pin "2" (uuid 96fe166c-7d4e-4069-bf1e-4d2dbb5244c4))
     (pin "3" (uuid f19a0aef-707b-4608-8adf-f3dafafccd83))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J1") (unit 1)
         )
@@ -1218,9 +1355,36 @@
     (pin "3" (uuid db01c50d-bbd4-4503-85a3-f07a8b1747dd))
     (pin "4" (uuid 4031679c-c3a1-47e3-9b0b-e3c477660502))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J2") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_name "Motor_DC_1") (lib_id "Motor:Motor_DC") (at 55.88 135.89 180) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 7ae13a33-98ba-437d-97f7-1c155aa4a8ce)
+    (property "Reference" "M3" (at 50.8 132.08 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Value" "Brushless DC" (at 50.8 134.62 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (at 55.88 133.604 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 55.88 133.604 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 8fd707b5-919b-4223-ab46-139bbb6f54ab))
+    (pin "2" (uuid 2482fbd1-a213-48cf-beb0-ddb600079353))
+    (pin "3" (uuid 5810abc9-6af3-4f47-8e12-89a89e85d561))
+    (instances
+      (project "battlebot_schematic"
+        (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
+          (reference "M3") (unit 1)
         )
       )
     )
@@ -1244,7 +1408,7 @@
     (pin "1" (uuid 17836fed-7513-424d-bccc-7e196e6807e9))
     (pin "2" (uuid b3198038-7acb-4504-aca2-8b7c95a9a373))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "M2") (unit 1)
         )
@@ -1283,7 +1447,7 @@
     (pin "2" (uuid 3adf578c-3525-40f5-ac22-6c9e6705f4c8))
     (pin "5" (uuid 616ef744-cb53-46a3-a7f9-b0eda33eeb82))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "U1") (unit 1)
         )
@@ -1309,7 +1473,7 @@
     (pin "1" (uuid 41359da4-1c50-4572-89f6-b4da2b134411))
     (pin "2" (uuid 511f94c0-7d57-43db-ae89-dd232f0df948))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "M1") (unit 1)
         )
@@ -1363,7 +1527,7 @@
     (pin "7" (uuid 2ab4a01c-2237-49a1-a7ea-987f0e6a565f))
     (pin "8" (uuid 68c63626-b9cc-474b-ae43-c24c0690cc12))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "A1") (unit 1)
         )
@@ -1388,7 +1552,7 @@
     )
     (pin "1" (uuid fb1272e1-1fdd-49ef-a397-ba91186fb76e))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "#PWR02") (unit 1)
         )
@@ -1414,7 +1578,7 @@
     (pin "2" (uuid e96d1046-464b-4784-b639-0ec84e96e5e1))
     (pin "1" (uuid 84a2d5af-9933-4884-b743-a2fd5841086a))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "R2") (unit 1)
         )
@@ -1440,7 +1604,7 @@
     (pin "1" (uuid 5b870271-c1ce-4a8c-9bf9-cd5c6dd37ccd))
     (pin "2" (uuid b45d8d1a-8442-400b-af8e-76c721af3e98))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_schematic"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "D1") (unit 1)
         )
