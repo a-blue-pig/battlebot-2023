@@ -6,7 +6,7 @@ Fall 2023
 Code for a battlebot. Recieves commands from a RC reciever
 and controls the drive train and weapon.
 
-Last Updated 11.11.2023
+Last Updated 11.25.2023
 */
 
 #include <Servo.h>
@@ -28,7 +28,7 @@ Last Updated 11.11.2023
 #define WM 6      // Weapon motor
 Servo weaponESC;
 
-// pin Interrupt stuff
+// pin Interrupt - Read channel values
 volatile long startTime1 = 0;       // ch1
 volatile long currentTime1 = 0;
 volatile long pulses1 = 0;
@@ -53,28 +53,30 @@ int ch4Val = 0;
 // pwm value mapping
 const int ch1Max = 1960;    // ch1
 const int ch1Min = 952;
-int ch1Resting = 1468;
+const int ch1Resting = 1468;
 
 const int ch2Max = 1976;    // ch2
 const int ch2Min = 1012;
-int ch2Resting = 1528;
+const int ch2Resting = 1528;
 
-int deadzone = 50;
+const int deadzone = 50;
 int adjAmount = 0;
-int pwmLowerLimit = 10;
+const int pwmLowerLimit = 10;
 
 // Set_Direction()
-char prevDir = 's';
+char prevDir = 's';     // Begin in stopped state
 
 // Weapon
-int ch3ActiveVal = 1200;
+const int ch3ActiveVal = 1200;
 int confirmCount = 0;
 bool prevStatusOn = 0;
-int minWeaponCount = 10;
-int weaponHigh = 1700;    // [us] micro seconds
-int weaponLow = weaponLow;
+const int minWeaponCount = 10;
+const int weaponHigh = 1700;    // [us] micro seconds
+const int weaponLow = 1500;     // [us] micro seconds
 bool weaponOn = 0;
 int confirmOffCount = 0;
+const long weaponPulseInterval = 1000;   // [ms] milliseconds
+const long weaponPrevMillis = 0;         // [ms] milliseconds
 
 
 void setup() {
@@ -147,17 +149,25 @@ void loop() {
 
   // Weapon Operation
   if (confirmCount == minWeaponCount) {
-    // if (!weaponOn){
-    //   Serial.println("Weapon Spinning");  
-    // }
-    // weaponOn = 1;
-    weaponESC.writeMicroseconds(weaponHigh);
+    // pulse the weapon
+    unsigned long weaponCurrentMillis = millis();
+    if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
+      weaponPrevMillis = weaponCurrentMillis;
+      if (!weaponOn){
+        weaponESC.writeMicroseconds(weaponHigh);
+        weaponOn = 1;
+        // Serial.println("Weapon Spinning");  
+      } else {
+        weaponESC.writeMicroseconds(weaponLow);
+        weaponOn = 0;
+        // Serial.println("Weapon Off");  
+      }
   } else {
+    weaponESC.writeMicroseconds(weaponLow);  
     // if (weaponOn){
     //   Serial.println("Weapon Off");  
     // }
     // weaponOn = 0;
-    weaponESC.writeMicroseconds(weaponLow);  
   }
 
   // Move Forward
@@ -195,7 +205,7 @@ void loop() {
       analogWrite(ENA, pwmAdj);
       analogWrite(ENB, pwmOut);
       // Serial.println("forward right");
-    
+
     // Only Forward
     } else {
       float pwmOut = map(ch2Val, ch2Resting+deadzone, ch2Max, 0, 255);
@@ -315,37 +325,37 @@ void set_direction(char dir) {
   switch (dir){
     case 'l':
       digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);  
+      digitalWrite(IN2, LOW);
       digitalWrite(IN3, LOW);
       digitalWrite(IN4, HIGH);
       break;
     case 'r':
       digitalWrite(IN1, LOW);
-      digitalWrite(IN2, HIGH);  
+      digitalWrite(IN2, HIGH);
       digitalWrite(IN3, HIGH);
       digitalWrite(IN4, LOW);
       break;
     case 'f':
       digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);  
+      digitalWrite(IN2, LOW);
       digitalWrite(IN3, HIGH);
       digitalWrite(IN4, LOW);
       break;
     case 'b':
       digitalWrite(IN1, LOW);
-      digitalWrite(IN2, HIGH);  
+      digitalWrite(IN2, HIGH);
       digitalWrite(IN3, LOW);
       digitalWrite(IN4, HIGH);
       break;
     case 's':
       digitalWrite(IN1, LOW);
-      digitalWrite(IN2, LOW);  
+      digitalWrite(IN2, LOW);
       digitalWrite(IN3, LOW);
       digitalWrite(IN4, LOW);
       break;
     default:
       digitalWrite(IN1, LOW);
-      digitalWrite(IN2, LOW);  
+      digitalWrite(IN2, LOW);
       digitalWrite(IN3, LOW);
       digitalWrite(IN4, LOW);
       break;
@@ -354,7 +364,7 @@ void set_direction(char dir) {
 }
 
 void eStop() {
-  weaponESC.writeMicroseconds(1300);  
+  weaponESC.writeMicroseconds(1300);
   analogWrite(ENA, 0);
   analogWrite(ENB, 0);
   set_direction('s');
