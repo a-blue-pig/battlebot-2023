@@ -6,7 +6,8 @@
 
   (title_block
     (title "BattleBot PCB")
-    (date "2023-11-18")
+    (date "2023-11-25")
+    (rev "2")
   )
 
   (lib_symbols
@@ -818,7 +819,7 @@
     (pin "2" (uuid c9f16b7a-cb99-481f-8de4-5402189a1f28))
     (pin "1" (uuid d0c6c4d2-6b7e-42e0-8eaf-f394124dd1d2))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J3") (unit 1)
         )
@@ -845,7 +846,7 @@
     (pin "2" (uuid 96fe166c-7d4e-4069-bf1e-4d2dbb5244c4))
     (pin "3" (uuid f19a0aef-707b-4608-8adf-f3dafafccd83))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J1") (unit 1)
         )
@@ -872,7 +873,7 @@
     (pin "2" (uuid 12714785-1a69-428c-8d13-e5b46d15ccec))
     (pin "1" (uuid e6d8d7d6-96e0-448f-9c1c-181c992db654))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J6") (unit 1)
         )
@@ -900,7 +901,7 @@
     (pin "3" (uuid db01c50d-bbd4-4503-85a3-f07a8b1747dd))
     (pin "4" (uuid 4031679c-c3a1-47e3-9b0b-e3c477660502))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J2") (unit 1)
         )
@@ -954,7 +955,7 @@
     (pin "7" (uuid 2ab4a01c-2237-49a1-a7ea-987f0e6a565f))
     (pin "8" (uuid 68c63626-b9cc-474b-ae43-c24c0690cc12))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "A1") (unit 1)
         )
@@ -984,7 +985,7 @@
     (pin "1" (uuid a087644f-e12f-44ed-b153-b36947c6f415))
     (pin "2" (uuid 678f9923-700b-4c9a-bd47-58e6dbcb760b))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J4") (unit 1)
         )
@@ -1009,7 +1010,7 @@
     )
     (pin "1" (uuid fb1272e1-1fdd-49ef-a397-ba91186fb76e))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "#PWR02") (unit 1)
         )
@@ -1035,7 +1036,7 @@
     (pin "1" (uuid f1666fc3-6b38-4d9e-a3fb-024853f7f95c))
     (pin "2" (uuid a5677b52-98d4-4d78-8687-a1c8be0ef8b9))
     (instances
-      (project "batttlebot_pcb"
+      (project "battlebot_pcb"
         (path "/2b8ae4fd-e618-49a8-a7d9-a55f2d54f1c7"
           (reference "J5") (unit 1)
         )
