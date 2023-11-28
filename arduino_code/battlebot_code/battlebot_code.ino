@@ -70,12 +70,13 @@ char prevDir = 's';     // Begin in stopped state
 const int ch3ActiveVal = 1200;
 int confirmCount = 0;
 bool prevStatusOn = 0;
-const int minWeaponCount = 10;
-const int weaponHigh = 1700;    // [us] micro seconds
-const int weaponLow = 1500;     // [us] micro seconds
+const int minWeaponCount = 5;
+const int weaponHigh = 1400;    // [us] micro seconds
+const int weaponLow = 1300;     // [us] micro seconds
 bool weaponOn = 0;
+bool leaveWeaponOn = 0;
 int confirmOffCount = 0;
-const long weaponPulseInterval = 1000;   // [ms] milliseconds
+const long weaponPulseInterval = 1400;   // [ms] milliseconds
 long weaponPrevMillis = 0;         // [ms] milliseconds
 
 
@@ -131,7 +132,7 @@ void loop() {
   // reciever_test();
   // Serial.println(ch3Val);
 
-  // Determine if ch3 truly on
+  // Determine if ch3 truly off
   if (ch3Val < ch3ActiveVal) {
     if (prevStatusOn && (confirmCount < minWeaponCount)){
       confirmCount++;
@@ -149,31 +150,31 @@ void loop() {
 
   // Weapon Operation
   if (confirmCount == minWeaponCount) {
+    weaponESC.writeMicroseconds(weaponLow);  
+    // if (weaponOn){
+    // Serial.println("Weapon Off");  
+    // }
+    weaponOn = 0;
+  } else {
+
     // pulse the weapon
-    weaponESC.writeMicroseconds(weaponHigh);
-    Serial.println("Weapon Spinning");  
-  
-    /*
     unsigned long weaponCurrentMillis = millis();
     if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
+      weaponPrevMillis = weaponCurrentMillis;
       if (!weaponOn){
         weaponESC.writeMicroseconds(weaponHigh);
         weaponOn = 1;
-        // Serial.println("Weapon Spinning");  
-      } else {
+        // Serial.println("Weapon Spinning");
+
+      // Make the weapon stay on for twice as long as the interval
+      } else if (leaveWeaponOn) {
         weaponESC.writeMicroseconds(weaponLow);
         weaponOn = 0;
-        // Serial.println("Weapon Off");  
+        leaveWeaponOn = 0;
+      } else {
+        leaveWeaponOn = 1;
       }
     }
-    weaponPrevMillis = weaponCurrentMillis;
-    */
-  } else {
-    weaponESC.writeMicroseconds(weaponLow);  
-    // if (weaponOn){
-    Serial.println("Weapon Off");  
-    // }
-    // weaponOn = 0;
   }
 
   // Move Forward
@@ -192,11 +193,10 @@ void loop() {
       float pwmAdj = abs(map(ch2Val-adjAmount, ch2Resting, ch2Max, pwmLowerLimit, 255));
 
       // turn left
-      analogWrite(ENA, pwmOut);
-      analogWrite(ENB, pwmAdj);
+      analogWrite(ENA, pwmAdj);
+      analogWrite(ENB, pwmOut);
 
       //Serial.println("forward left");
-
     // Turn. Right
     } else if (ch1Val < (ch1Resting-deadzone)) {
       // slow down turn inner wheel
@@ -208,8 +208,9 @@ void loop() {
       float pwmAdj = abs(map(ch2Val-adjAmount, ch2Resting, ch2Max, pwmLowerLimit, 255));
 
       // turn right
-      analogWrite(ENA, pwmAdj);
-      analogWrite(ENB, pwmOut);
+      analogWrite(ENA, pwmOut);
+      analogWrite(ENB, pwmAdj);
+
       // Serial.println("forward right");
 
     // Only Forward
@@ -234,8 +235,8 @@ void loop() {
       float pwmAdj = abs(map(ch2Val+adjAmount, ch2Min, ch2Resting, 255, pwmLowerLimit));
 
       // turn backwards left
-      analogWrite(ENA, pwmOut);
-      analogWrite(ENB, pwmAdj);
+      analogWrite(ENA, pwmAdj);
+      analogWrite(ENB, pwmOut);
 
       // Serial.println("backward left");
 
@@ -249,8 +250,9 @@ void loop() {
       float pwmAdj = abs(map(ch2Val+adjAmount, ch2Min, ch2Resting, 255, pwmLowerLimit));
 
       // turn backwards right
-      analogWrite(ENA, pwmAdj);
-      analogWrite(ENB, pwmOut);
+      analogWrite(ENA, pwmOut);
+      analogWrite(ENB, pwmAdj);
+
       // Serial.println("backward right");
 
     // Only Backward
@@ -330,16 +332,16 @@ void set_direction(char dir) {
   }
   switch (dir){
     case 'l':
-      digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, HIGH);
-      break;
-    case 'r':
       digitalWrite(IN1, LOW);
       digitalWrite(IN2, HIGH);
       digitalWrite(IN3, HIGH);
       digitalWrite(IN4, LOW);
+      break;
+    case 'r':
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
       break;
     case 'f':
       digitalWrite(IN1, HIGH);
