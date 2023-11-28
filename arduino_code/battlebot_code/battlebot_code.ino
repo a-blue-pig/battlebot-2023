@@ -6,7 +6,7 @@ Fall 2023
 Code for a battlebot. Recieves commands from a RC reciever
 and controls the drive train and weapon.
 
-Last Updated 11.25.2023
+Last Updated 11.27.2023
 */
 
 #include <Servo.h>
@@ -15,7 +15,7 @@ Last Updated 11.25.2023
 #define CH1 21     // reciever inputs
 #define CH2 2
 #define CH3 3
-#define CH4 11
+#define CH4 12
 
 #define ENA 10     // right side
 #define IN1 9
@@ -76,7 +76,7 @@ const int weaponLow = 1500;     // [us] micro seconds
 bool weaponOn = 0;
 int confirmOffCount = 0;
 const long weaponPulseInterval = 1000;   // [ms] milliseconds
-const long weaponPrevMillis = 0;         // [ms] milliseconds
+long weaponPrevMillis = 0;         // [ms] milliseconds
 
 
 void setup() {
@@ -99,11 +99,11 @@ void setup() {
   pinMode(IN4, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);
   weaponESC.attach(WM);
   weaponESC.writeMicroseconds(weaponLow);
-  delay(3000);
-  digitalWrite(LED_BUILTIN, LOW);
+  delay(5000);
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void loop() {
@@ -150,9 +150,12 @@ void loop() {
   // Weapon Operation
   if (confirmCount == minWeaponCount) {
     // pulse the weapon
+    weaponESC.writeMicroseconds(weaponHigh);
+    Serial.println("Weapon Spinning");  
+  
+    /*
     unsigned long weaponCurrentMillis = millis();
     if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
-      weaponPrevMillis = weaponCurrentMillis;
       if (!weaponOn){
         weaponESC.writeMicroseconds(weaponHigh);
         weaponOn = 1;
@@ -162,10 +165,13 @@ void loop() {
         weaponOn = 0;
         // Serial.println("Weapon Off");  
       }
+    }
+    weaponPrevMillis = weaponCurrentMillis;
+    */
   } else {
     weaponESC.writeMicroseconds(weaponLow);  
     // if (weaponOn){
-    //   Serial.println("Weapon Off");  
+    Serial.println("Weapon Off");  
     // }
     // weaponOn = 0;
   }
@@ -364,11 +370,11 @@ void set_direction(char dir) {
 }
 
 void eStop() {
-  weaponESC.writeMicroseconds(1300);
+  weaponESC.writeMicroseconds(weaponLow);
   analogWrite(ENA, 0);
   analogWrite(ENB, 0);
   set_direction('s');
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 void reciever_test(){
