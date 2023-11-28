@@ -77,7 +77,8 @@ bool weaponOn = 0;
 bool leaveWeaponOn = 0;
 int confirmOffCount = 0;
 const long weaponPulseInterval = 1400;   // [ms] milliseconds
-long weaponPrevMillis = 0;         // [ms] milliseconds
+long weaponPrevMillis = 0;               // [ms] milliseconds
+bool weaponPulse = 0;                    // Set true if you want the weapon to pulse
 
 
 void setup() {
@@ -156,24 +157,29 @@ void loop() {
     // }
     weaponOn = 0;
   } else {
+    if (weaponPulse){
+      // pulse the weapon
+      unsigned long weaponCurrentMillis = millis();
+      if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
+        weaponPrevMillis = weaponCurrentMillis;
+        if (!weaponOn){
+          weaponESC.writeMicroseconds(weaponHigh);
+          weaponOn = 1;
+          // Serial.println("Weapon Spinning");
 
-    // pulse the weapon
-    unsigned long weaponCurrentMillis = millis();
-    if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
-      weaponPrevMillis = weaponCurrentMillis;
-      if (!weaponOn){
-        weaponESC.writeMicroseconds(weaponHigh);
-        weaponOn = 1;
-        // Serial.println("Weapon Spinning");
-
-      // Make the weapon stay on for twice as long as the interval
-      } else if (leaveWeaponOn) {
-        weaponESC.writeMicroseconds(weaponLow);
-        weaponOn = 0;
-        leaveWeaponOn = 0;
-      } else {
-        leaveWeaponOn = 1;
+        // Make the weapon stay on for twice as long as the interval
+        } else if (leaveWeaponOn) {
+          weaponESC.writeMicroseconds(weaponLow);
+          weaponOn = 0;
+          leaveWeaponOn = 0;
+        } else {
+          leaveWeaponOn = 1;
+        }
       }
+    } else {
+      weaponESC.writeMicroseconds(weaponHigh);
+      weaponOn = 1;
+
     }
   }
 
