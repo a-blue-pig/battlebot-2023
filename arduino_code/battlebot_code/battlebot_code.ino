@@ -6,7 +6,7 @@ Fall 2023
 Code for a battlebot. Recieves commands from a RC reciever
 and controls the drive train and weapon.
 
-Last Updated 11.27.2023
+Last Updated 12.3.2023
 */
 
 #include <Servo.h>
@@ -70,15 +70,20 @@ char prevDir = 's';     // Begin in stopped state
 const int ch3ActiveVal = 1200;
 int confirmCount = 0;
 bool prevStatusOn = 0;
-const int minWeaponCount = 5;
-const int weaponHigh = 1400;    // [us] micro seconds
 const int weaponLow = 1300;     // [us] micro seconds
 bool weaponOn = 0;
 bool leaveWeaponOn = 0;
 int confirmOffCount = 0;
-const long weaponPulseInterval = 1400;   // [ms] milliseconds
 long weaponPrevMillis = 0;               // [ms] milliseconds
+int val = 0;
+
+
+// Params to set
 bool weaponPulse = 0;                    // Set true if you want the weapon to pulse
+const long weaponPulseInterval = 1400;   // [ms] milliseconds
+const int weaponHigh = 1500;             // [us] micro seconds
+const int minWeaponCount = 10;
+
 
 
 void setup() {
@@ -153,16 +158,25 @@ void loop() {
   if (confirmCount == minWeaponCount) {
     weaponESC.writeMicroseconds(weaponLow);  
     // if (weaponOn){
-    // Serial.println("Weapon Off");  
+    Serial.println("Weapon Off");  
     // }
     weaponOn = 0;
   } else {
+    Serial.println("Weapon On");  
     if (weaponPulse){
       // pulse the weapon
       unsigned long weaponCurrentMillis = millis();
       if (weaponCurrentMillis - weaponPrevMillis >= weaponPulseInterval) {
         weaponPrevMillis = weaponCurrentMillis;
         if (!weaponOn){
+          for (val = weaponLow; val <= 1400; val += 25) {
+            weaponESC.writeMicroseconds(val);
+            delay(500);
+          }
+          for (val = 1400; val <= weaponHigh; val += 25) {
+            weaponESC.writeMicroseconds(val);
+            delay(100);
+          }
           weaponESC.writeMicroseconds(weaponHigh);
           weaponOn = 1;
           // Serial.println("Weapon Spinning");
@@ -177,9 +191,20 @@ void loop() {
         }
       }
     } else {
-      weaponESC.writeMicroseconds(weaponHigh);
-      weaponOn = 1;
-
+      if (!weaponOn){
+        for (val = weaponLow; val <= 1400; val += 25) {
+          weaponESC.writeMicroseconds(val);
+          delay(500);
+        }
+        for (val = 1400; val <= weaponHigh; val += 25) {
+          weaponESC.writeMicroseconds(val);
+          delay(100);
+        }
+        weaponOn = 1;
+      } else {
+        weaponESC.writeMicroseconds(weaponHigh);
+        weaponOn = 1;
+      }
     }
   }
 
